@@ -1,17 +1,15 @@
+/*
+ * Copyright (C) 2021 Abel Prieto
+ *
+ * This software may be modified and distributed under the terms
+ * of the MIT license.  See the LICENSE file for details.
+ */
 var App = window.App || {};
-
-function tv(){
-	var value = tizen.tvinputdevice.getSupportedKeys();
-	console.log(value); 
-}
 
 App.Main = (function Main(){
 	
     window.onload = function () {
-    		tv();
-    		window.addEventListener('keydown', (event) => {
-    			console.log(event); 	
-    		},false);
+
 
     };
     
