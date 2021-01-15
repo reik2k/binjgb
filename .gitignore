@@ -7,3 +7,14 @@
 __pycache__
 *.pyc
 imgui.ini
+
+# Tizen (eclipse) settings
+.settings
+
+#compile file
+*.wgt
+
+# avoid unused wasm_modules
+SamGameBoy/wasm_modules/
+!SamGameBoy/resources/roms/cpu_instrs.gb
+SamGameBoy/resources/roms/
