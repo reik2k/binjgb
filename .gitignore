@@ -18,3 +18,8 @@ imgui.ini
 SamGameBoy/wasm_modules/
 !SamGameBoy/resources/roms/cpu_instrs.gb
 SamGameBoy/resources/roms/
+
+# keys for deploy in SamsungTV
+/SamGameBoy/.sign/.manifest.tmp
+/SamGameBoy/.sign/author-signature.xml
+/SamGameBoy/.sign/signature1.xml

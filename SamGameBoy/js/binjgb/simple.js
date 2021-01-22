@@ -89,7 +89,7 @@ const vm = new VM();
 function loadEmu(){
 	// Load a ROM.
 	(async function go() {
-	  let response = await fetch('../../resources/roms/Super_Mario_Bros_Deluxe.gbc');
+	  let response = await fetch('../../resources/roms/Super_Mario_Land_(World).txt');
 	  let romBuffer = await response.arrayBuffer();
 	  const extRam = new Uint8Array(JSON.parse(localStorage.getItem('extram')));
 	  Emulator.start(await binjgbPromise, romBuffer, extRam);

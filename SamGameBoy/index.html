@@ -1,64 +1,71 @@
 <!DOCTYPE html>
 <head>
   <title>binjgb (simple)</title>
-  <style>
-  body{
-   background-color: #e8a3ec;
-  }
-    canvas {
-      position:absolute; 
-      top:0;bottom:0;right:0;left:0; 
-      margin:auto;
-      
-      width: 480px;
-      height: 432px;
-      
-      /*border: 5px solid #5c4b5f;
-      background-color: #5c4b5f;
-      */
-      image-rendering: pixelated;
-      image-rendering: -moz-crisp-edges;
-    }
-    div{
-        position:relative;
-        width:100%; 
-        height:100vh;
-    }
-    .button{
-     position:relative;
-	 display:inline-block;
-	 padding:0.35em 1.2em;
-	 border:0.1em solid black;
-	 margin:0 0.3em 0.3em 0;
-	 border-radius:0.12em;
-	 box-sizing: border-box;
-	 font-weight:300;
-	 color:black;
-	 text-align:center;
-	 transition: all 0.2s;
-	}
-	
-	.button:hover{
-	 color:#000000;
-	 background-color:#e8a3ec;
-	}
-
-	@media all and (max-width:30em){
-	 .button{
-	  display:block;
-	  margin:0.4em auto;
-	 }
-	}
-
-  </style>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/nes_css/nes.min.css" />
+  
+  <script src="$WEBAPIS/webapis/webapis.js"></script>
 </head>
 <body>
-  <div>
-    <canvas width="160" height="144" class="center"></canvas>
-    <button class="button" onclick="loadEmu()">click</button>
-  </div>
+    <header class="table">
+        <nav>
+            <ul>
+                <li><input class="nes-btn btn-on" type="button" value="Encender" /></li>
+                <li><input class="nes-btn is-error btn-off is-disabled" type="button" value="Apagar" /></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section>
+	    <div class="gameboy">
+	        <div class="screen-cont">
+	            <div class="power"></div>
+	            <div class="screen">
+	                <div class="header">DOT MATRIX WITH STEREO SOUND</div>
+	                <div class="animated-text">
+	                    Nintendo
+	                    <div class="copy">®</div>
+	                </div>
+	                <canvas class="canvas hide"></canvas>
+	            </div>
+	        </div>
+	        <div class="controls-cont">
+	            <p style="left: 40px;position: relative;">Nintendo</p>
+	            <img alt="gameboy" src="resources/images/gb.png" style="float: left;position: relative;top: -72px;left: 130px;width: 10rem;"/>
+	            <div class="btn-direction">
+	                <div class="vertical"></div>
+	                <div class="horizontal"></div>
+	            </div>
+	            <div class="btn-AB">
+	                <p style="position: relative;top: 3.8rem;left: 1.8rem;">B</p>
+	                <p style="position: relative;top: 1.6rem;left: 5.5rem;">A</p>
+	            </div>
+	            <div class="btn-start-select">
+	                <p style="position: relative;top: 1rem;">select</p>
+				    <p style="position: relative;top: 0.2rem;left: 4rem;">start</p>
+				 </div>
+	        </div>
+	        <div class="speakers"></div>
+	        <div class="on-off">< off-on ></div>
+	        <div class="phones">phones</div>
+	    </div>
+    </section>
+    <label for="default_select">Default select</label>
+	<div class="nes-select">
+	  <select required id="default_select">
+	    <option value="" disabled selected hidden>Select...</option>
+	  </select>
+	</div>
+    <footer>
+        <div class="nes-container is-rounded is-dark">  
+            <p>Prisfotware2k</p>
+        </div>
+    </footer>
   <script src="js/binjgb/binjgb.js"></script>
-  <!-- script src="js/binjgb/sha1.js"></script-->
   <script src="js/binjgb/simple.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/USB.js"></script>
   <script src="js/main.js"></script>
+    
+  <audio src="resources/sound/gameboy-sound.mp3"></audio>
 </body>
