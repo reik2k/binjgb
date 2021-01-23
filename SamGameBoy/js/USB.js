@@ -12,9 +12,13 @@ App.USB = (function USB() {
 	const STATE = "MOUNTED";
 	const ROMS_PATH = '/roms/gb';
 	
-	var storages = {};
-	var link = {};
-	var roms = [];
+	var listRoms = [];
+	var resolve_roms;
+	var rejected_roms;
+	var roms_promise = new Promise((resolve,rejected)=>{
+		resolve_roms = resolve; /* it is resolve in getRomsList() */
+		rejected_roms = rejected;
+	});
 	
 	/**
 	 * USB state listener
@@ -23,7 +27,7 @@ App.USB = (function USB() {
 		var usb = this;
 		
 		FS.addStorageStateChangeListener(function(result) {
-			console.debug(JSON.stringify(result));
+			console.debug('usbEventListener (result)', result);
 			usb.checkMountState();
 	  }, error);
 	}
@@ -32,19 +36,11 @@ App.USB = (function USB() {
 	 * Check how many USB are mounted
 	 */
 	function checkMountState() {
-		this.numOfMountedUSB = 0;
-		this.USBLabelList = "";
-		var usb = this;
-		
 		FS.listStorages(function(storages){
-			
 			for (var i = 0; i < storages.length; i++){
-				
-				debug('checkMountState',JSON.stringify(storages[i]));
-				
+				debug('checkMountState (storages)', storages[i]);
 				if(storages[i].type == TYPE && storages[i].state == STATE){
-					usb.storages = storages[i];
-					usb.getRomsPath();
+					getRomsPath(storages[i].label);
 				}
 			}
 			
@@ -55,17 +51,14 @@ App.USB = (function USB() {
 	 * Get link or path to roms directory.
 	 * 
 	 */
-	function getRomsPath(){
-		var usb = this;
-		
+	function getRomsPath(label){
 		FS.resolve(
-			usb.storages.label + ROMS_PATH,
+			label + ROMS_PATH,
 			function(dir) {
-			  debug('FS.resolve', dir);
+			  debug('FS.resolve (dir)', dir);
 			  try{
-				  
 				  /*Listing directory files to get names roms*/
-				  FS.listDirectory(dir.fullPath,usb.getRomsList,error);
+				  FS.listDirectory(dir.fullPath,getRomsList,error);
 			  }catch(e){error(e)};
 			},
 			error,
@@ -77,13 +70,48 @@ App.USB = (function USB() {
 	 * Gets available list roms in array object
 	 */
 	function getRomsList(files, path){
-		roms =  files;
-		debug('getRomsList (roms)', roms);
+		var list = [];
+		files.forEach((fileName)=>{
+			if( !is_oculted_file(fileName) && 
+				check_extension_file(fileName)){
+				let f = {
+					path: '/' + path + '/' + fileName,
+					name: fileName
+				};
+				list.push(f);
+			}
+		});
+		
+		resolve_roms(list);
+	}
+	
+	/**
+	 * Avoid oculted files
+	 */
+	function is_oculted_file(fileName){
+		
+		if(fileName.indexOf('.') == 0){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Only accept GB or GBC extension
+	 */
+	function check_extension_file(fileName){
+		var extension = fileName.split('.')[1];
+		if(extension == 'gb' || extension == 'gbc'){
+			return true;
+		}
+		
+		return false;
 	}
 	
 	return {
 		checkMountState: checkMountState,
 		usbEventListener: usbEventListener,
-		roms: roms
+		roms: roms_promise
 	};
 }());

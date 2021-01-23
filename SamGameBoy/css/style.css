@@ -17,6 +17,9 @@
   font-style: normal;
 }
 
+/*
+* START Samsung CSS
+*/
 body {
   background: url('/../../resources/images/optimized-6ouv.png')no-repeat center center fixed; 
   -webkit-background-size: cover;
@@ -34,7 +37,7 @@ nav ul{
     padding: 0;
     margin: 0;
     list-style: none;
-     text-align: center;
+    text-align: center;
 }
 nav ul li{
 	float:none !important;
@@ -58,8 +61,8 @@ input{
 footer{
 	position: fixed;
     bottom: 0px;
-    left: 40%;
-    right: 40%;
+    left: 39%;
+    right: 39%;
 }
 footer p{
 	font-family: 'P2P';
@@ -70,10 +73,20 @@ footer p{
     display: table;   /* Allow the centering to work */
     margin: 0 auto;
 }
-
-/*
-* START Samsung CSS
-*/
+.increase{
+	position: absolute !important;
+	top: -75% !important;
+	left: -155%;
+	width: 900px;
+	height: 820px;
+	z-index: 999;
+	border-radius: 1rem;
+	
+}
+.decrease{
+    width: 225px;
+    height: 205px;
+}
 p{
   font-family: 'Pretendo';
   color: #4b57d1;
@@ -81,8 +94,7 @@ p{
 .canvas{
     position: relative;
     top: -3.5rem;
-    width: 225px;
-    height: 205px;
+    z-index:999;
 }
 .hide{
 	display: none !important;
@@ -90,7 +102,6 @@ p{
 .show{
     display: block !important;
 }
-
 /*
 * END Samsung CSS
 */

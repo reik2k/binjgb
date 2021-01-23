@@ -86,10 +86,10 @@ const vm = new VM();
   emulator.setBuiltinPalette(vm.pal);
 })();
 */
-function loadEmu(){
+function loadEmu(rom_selected){
 	// Load a ROM.
 	(async function go() {
-	  let response = await fetch('../../resources/roms/Super_Mario_Land_(World).txt');
+	  let response = await fetch(rom_selected);
 	  let romBuffer = await response.arrayBuffer();
 	  const extRam = new Uint8Array(JSON.parse(localStorage.getItem('extram')));
 	  Emulator.start(await binjgbPromise, romBuffer, extRam);

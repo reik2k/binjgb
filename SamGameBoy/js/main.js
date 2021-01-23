@@ -10,11 +10,14 @@ App.Main = (function Main(){
 	
 	const btnON = document.querySelector( '.btn-on' );
 	const btnOFF = document.querySelector( '.btn-off' );
+	const btnIncrease  = document.querySelector( '.btn-increase' );
 	const power = document.querySelector( '.power' );
 	const text = document.querySelector( '.animated-text' );
 	const canvas = document.querySelector( '.canvas' );
-	const select = document.querySelector( '.default_select' );
+	const select = document.getElementById( 'default_select' );
 	
+	var path = '';
+	var rom_selected = '';
 	var usb = App.USB;
 	
 	/**
@@ -80,17 +83,16 @@ App.Main = (function Main(){
     }
     
     function completeSelect(roms){
-    		
+    		debug('completeSelect', roms);
 	    	if(roms && roms.length!=0){
-	    		for(let i; i < roms.length; i++){
+	    		for(let i=0; i < roms.length; i++){
 	    			let option = document.createElement('option');
-	    			option.setAttribute('value', roms[i] + '.' + i);
+	    			option.appendChild( document.createTextNode(roms[i].name) );
+	    			option.value = roms[i].path + '*' + i; /* be sure element selected and avoid repeats names */
 	    			select.appendChild(option);
 	    			
 	    		}
 	    	}
-	    	
-	    	debug('completeSelect', roms);
     }
     
     /**
@@ -98,6 +100,25 @@ App.Main = (function Main(){
 	 */
     function animate() {
 		
+    		btnIncrease.onclick = function () {
+	    		if(canvas.className.indexOf('increase') == -1){
+	    			canvas.classList.remove( 'decrease' );
+	    			canvas.classList.add( 'nes-container');
+	    			canvas.classList.add( 'is-dark');
+	    			canvas.classList.add( 'is-rounded');
+	    			canvas.classList.add( 'increase' );
+	    			btnIncrease.value = 'x2';
+	    		}
+			else {
+    				canvas.classList.remove( 'nes-container');
+    				canvas.classList.remove( 'is-dark');
+    				canvas.classList.remove( 'is-rounded');
+				canvas.classList.remove( 'increase' );
+				canvas.classList.add( 'decrease' );
+				btnIncrease.value = 'x1';
+			}
+	    	}
+	    	
         // Turn ON
         btnON.onclick = function () {
         	
@@ -118,7 +139,7 @@ App.Main = (function Main(){
 		    promise.then(
 		    		function(){
 		    			toggleCanvas();
-		    			loadEmu();
+		    			loadEmu(path+'/'+rom_selected);
 		    		});
 		    
         };
@@ -138,7 +159,15 @@ App.Main = (function Main(){
     window.onload = function () {
     		usb.usbEventListener();
     		usb.checkMountState();
-    		completeSelect(usb.roms);
+    		
+    		usb.roms.then((list)=>{
+    			completeSelect(list);
+    		});
+    		
+    		select.addEventListener('change', function() {
+    			  debug('select.onchange: ', this.value);
+    			  rom_selected = this.value.split('*')[0];
+    		});
     		
     		animate();
     };

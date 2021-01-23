@@ -12,6 +12,14 @@
             <ul>
                 <li><input class="nes-btn btn-on" type="button" value="Encender" /></li>
                 <li><input class="nes-btn is-error btn-off is-disabled" type="button" value="Apagar" /></li>
+                <li><input class="nes-btn btn-increase" type="button" value="x2" /></li>
+                <li>
+                    <div class="nes-select" style="max-width: 23rem; margin: 0 auto;">
+				      <select required id="default_select">
+				        <option value="" disabled selected hidden>Select a ROM...</option>
+				      </select>
+				    </div>
+                </li>
             </ul>
         </nav>
     </header>
@@ -26,7 +34,7 @@
 	                    Nintendo
 	                    <div class="copy">®</div>
 	                </div>
-	                <canvas class="canvas hide"></canvas>
+	                <canvas class="canvas hide decrease"></canvas>
 	            </div>
 	        </div>
 	        <div class="controls-cont">
@@ -50,14 +58,8 @@
 	        <div class="phones">phones</div>
 	    </div>
     </section>
-    <label for="default_select">Default select</label>
-	<div class="nes-select">
-	  <select required id="default_select">
-	    <option value="" disabled selected hidden>Select...</option>
-	  </select>
-	</div>
     <footer>
-        <div class="nes-container is-rounded is-dark">  
+        <div class="nes-container is-rounded is-dark" style="border-radius: 1rem;">  
             <p>Prisfotware2k</p>
         </div>
     </footer>
