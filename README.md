@@ -4,6 +4,10 @@
 
 A simple GB/GBC emulator.
 
+## Play in Samsung TV!! :-)
+
+Follow to ![Link](/SamGameBoy/)
+
 ## Features
 
 * [Runs in the browser using WebAssembly](https://binji.github.io/binjgb)
